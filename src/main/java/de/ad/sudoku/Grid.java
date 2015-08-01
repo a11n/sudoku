@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents a Sudoku Grid consisting of a 9x9 matrix containing nine 3x3 sub-grids
+ * of {@link Cell}s.
+ */
 public class Grid {
 
   private final Cell[][] grid;
@@ -14,6 +18,12 @@ public class Grid {
     this.grid = grid;
   }
 
+  /**
+   * A static factory method which returns a Grid of a given two-dimensional array of integers.
+   * 
+   * @param grid a two-dimensional int-array representation of a Grid
+   * @return a Grid instance corresponding to the provided two-dimensional int-array
+   */
   public static Grid of(int[][] grid) {
     //verifyGrid(grid);
 
@@ -75,19 +85,48 @@ public class Grid {
     return new Grid(cells);
   }
 
+  /**
+   * A static factory method which returns an empty Grid.
+   * 
+   * @return an empty Grid
+   */
   public static Grid emptyGrid() {
     int[][] emptyGrid = new int[9][9];
     return Grid.of(emptyGrid);
   }
 
+  /**
+   * Returns the size of this Grid. This method is useful if you want to iterate over all {@link Cell}s.
+   * <br><br>
+   * To access one cell use {@link #getCell(int,int)}.
+   * <br><br>
+   * Note: This is the size of one dimension. This Grid contains size x size {@link Cell}s.
+   * @return the size of this Grid
+   */
   public int getSize() {
     return grid.length;
   }
 
+  /**
+   * Returns the {@link Cell} at the given position within the Grid.
+   * <br><br>
+   * This Grid has 0 to {@link #getSize()} rows and 0 to {@link #getSize()} columns.
+   * @param row the row which contains the {@link Cell}
+   * @param column the column which contains the {@link Cell}
+   * @return the {@link Cell} at the given position
+   */
   public Cell getCell(int row, int column) {
     return grid[row][column];
   }
 
+  /**
+   * Checks if a given value is valid for a certain {@link Cell}.
+   * <br><br>
+   * A value is valid if it does not already exist in the same row, column and box.
+   * @param cell the {@link Cell} to check
+   * @param value the value to validate
+   * @return true if the given value is valid or false otherwise
+   */
   public boolean isValidValueForCell(Cell cell, int value) {
     return isValidInRow(cell, value) && isValidInColumn(cell, value) && isValidInBox(cell, value);
   }
@@ -96,26 +135,48 @@ public class Grid {
     return !getRowValuesOf(cell).contains(value);
   }
 
-  private Collection<Integer> getRowValuesOf(Cell cell) {
-    return cell.getRowNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
-  }
-
   private boolean isValidInColumn(Cell cell, int value) {
     return !getColumnValuesOf(cell).contains(value);
-  }
-
-  private Collection<Integer> getColumnValuesOf(Cell cell) {
-    return cell.getColumnNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
   }
 
   private boolean isValidInBox(Cell cell, int value) {
     return !getBoxValuesOf(cell).contains(value);
   }
 
+  private Collection<Integer> getRowValuesOf(Cell cell) {
+    return cell.getRowNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
+  }
+
+  private Collection<Integer> getColumnValuesOf(Cell cell) {
+    return cell.getColumnNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
+  }
+
   private Collection<Integer> getBoxValuesOf(Cell cell) {
     return cell.getBoxNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
   }
 
+  /**
+   * Returns the first empty {@link Cell} of this Grid.
+   * <br><br>
+   * Note: The result is wrapped by an {@link Optional}.
+   * @return a non-null value containing the first empty {@link Cell} if present
+   */
+  public Optional<Cell> getFirstEmptyCell() {
+    Cell firstCell = grid[0][0];
+    if (firstCell.isEmpty()) {
+      return Optional.of(firstCell);
+    }
+
+    return getNextEmptyCellOf(firstCell);
+  }
+
+  /**
+   * Returns the next empty {@link Cell} consecutively to the given {@link Cell} in this Grid.
+   * <br><br>
+   * Note: The result is wrapped by an {@link Optional}.
+   * @param cell the {@link Cell} of which the next empty {@link Cell} should be obtained
+   * @return a non-null value containing the next empty {@link Cell} if present
+   */
   public Optional<Cell> getNextEmptyCellOf(Cell cell) {
     Cell nextEmptyCell = null;
 
@@ -131,19 +192,17 @@ public class Grid {
     return Optional.ofNullable(nextEmptyCell);
   }
 
-  public Optional<Cell> getFirstEmptyCell() {
-    Cell firstCell = grid[0][0];
-    if (firstCell.isEmpty()) {
-      return Optional.of(firstCell);
-    }
-
-    return getNextEmptyCellOf(firstCell);
-  }
-
+  /**
+   * Returns a {@link String} representation of this Grid.
+   * @return a {@link String} representation of this Grid.
+   */
   @Override public String toString() {
     return StringConverter.toString(this);
   }
 
+  /**
+   * This class represents a Cell within a Sudoku {@link Grid}.
+   */
   public static class Cell {
     private int value;
     private Collection<Cell> rowNeighbors;
