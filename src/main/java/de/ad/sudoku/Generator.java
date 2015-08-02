@@ -8,6 +8,9 @@ import java.util.Random;
 public class Generator {
   private Solver solver;
 
+  /**
+   * Constructs a new Generator instance.
+   */
   public Generator() {
     this.solver = new Solver();
   }
