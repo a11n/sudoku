@@ -333,7 +333,7 @@ public class Grid {
           printRightColumnBorder(builder, column + 1, size);
         }
         printRowBorder(builder);
-        System.out.println();
+        builder.append("\n");
         printBottomRowBorder(builder, row + 1, size);
       }
       printBottomBorder(builder);
@@ -346,7 +346,7 @@ public class Grid {
     }
 
     private static void printRowBorder(StringBuilder builder) {
-      builder.append("║\n");
+      builder.append("║");
     }
 
     private static void printValue(StringBuilder builder, Grid grid, int row, int column) {
