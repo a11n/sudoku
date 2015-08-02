@@ -13,7 +13,7 @@ cd $FOLDER
 git rm -rf . > /dev/null
 
 echo "3. Copy javdoc and deploy"
-cp -r ./build/docs/javadoc/. ./
+cp -r ../build/docs/javadoc/ ./
 git add .
 git commit -m "Published javadoc." > /dev/null
 git push -q
