@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * This class represents a Sudoku Grid consisting of a 9x9 matrix containing nine 3x3 sub-grids
- * of {@link Cell}s.
+ * This class represents a Sudoku Grid consisting of a 9x9 matrix containing nine 3x3 sub-grids of
+ * {@link Cell}s.
  */
 public class Grid {
 
@@ -20,7 +20,7 @@ public class Grid {
 
   /**
    * A static factory method which returns a Grid of a given two-dimensional array of integers.
-   * 
+   *
    * @param grid a two-dimensional int-array representation of a Grid
    * @return a Grid instance corresponding to the provided two-dimensional int-array
    */
@@ -87,7 +87,7 @@ public class Grid {
 
   /**
    * A static factory method which returns an empty Grid.
-   * 
+   *
    * @return an empty Grid
    */
   public static Grid emptyGrid() {
@@ -96,11 +96,10 @@ public class Grid {
   }
 
   /**
-   * Returns the size of this Grid. This method is useful if you want to iterate over all {@link Cell}s.
-   * <br><br>
-   * To access one cell use {@link #getCell(int,int)}.
-   * <br><br>
-   * Note: This is the size of one dimension. This Grid contains size x size {@link Cell}s.
+   * Returns the size of this Grid. This method is useful if you want to iterate over all {@link
+   * Cell}s. <br><br> To access one cell use {@link #getCell(int, int)}. <br><br> Note: This is the
+   * size of one dimension. This Grid contains size x size {@link Cell}s.
+   *
    * @return the size of this Grid
    */
   public int getSize() {
@@ -108,9 +107,9 @@ public class Grid {
   }
 
   /**
-   * Returns the {@link Cell} at the given position within the Grid.
-   * <br><br>
-   * This Grid has 0 to {@link #getSize()} rows and 0 to {@link #getSize()} columns.
+   * Returns the {@link Cell} at the given position within the Grid. <br><br> This Grid has 0 to
+   * {@link #getSize()} rows and 0 to {@link #getSize()} columns.
+   *
    * @param row the row which contains the {@link Cell}
    * @param column the column which contains the {@link Cell}
    * @return the {@link Cell} at the given position
@@ -120,9 +119,9 @@ public class Grid {
   }
 
   /**
-   * Checks if a given value is valid for a certain {@link Cell}.
-   * <br><br>
-   * A value is valid if it does not already exist in the same row, column and box.
+   * Checks if a given value is valid for a certain {@link Cell}. <br><br> A value is valid if it
+   * does not already exist in the same row, column and box.
+   *
    * @param cell the {@link Cell} to check
    * @param value the value to validate
    * @return true if the given value is valid or false otherwise
@@ -156,9 +155,9 @@ public class Grid {
   }
 
   /**
-   * Returns the first empty {@link Cell} of this Grid.
-   * <br><br>
-   * Note: The result is wrapped by an {@link Optional}.
+   * Returns the first empty {@link Cell} of this Grid. <br><br> Note: The result is wrapped by an
+   * {@link Optional}.
+   *
    * @return a non-null value containing the first empty {@link Cell} if present
    */
   public Optional<Cell> getFirstEmptyCell() {
@@ -172,8 +171,8 @@ public class Grid {
 
   /**
    * Returns the next empty {@link Cell} consecutively to the given {@link Cell} in this Grid.
-   * <br><br>
-   * Note: The result is wrapped by an {@link Optional}.
+   * <br><br> Note: The result is wrapped by an {@link Optional}.
+   *
    * @param cell the {@link Cell} of which the next empty {@link Cell} should be obtained
    * @return a non-null value containing the next empty {@link Cell} if present
    */
@@ -194,6 +193,7 @@ public class Grid {
 
   /**
    * Returns a {@link String} representation of this Grid.
+   *
    * @return a {@link String} representation of this Grid.
    */
   @Override public String toString() {
@@ -201,7 +201,8 @@ public class Grid {
   }
 
   /**
-   * This class represents a Cell within a Sudoku {@link Grid}.
+   * This class represents a Cell within a Sudoku {@link Grid}. <br><br> It features a couple of
+   * convenient methods.
    */
   public static class Cell {
     private int value;
@@ -214,46 +215,106 @@ public class Grid {
       this.value = value;
     }
 
+    /**
+     * Returns the value of the Cell. <br><br> The value is a digit (1, ..., 9) or 0 if the Cell is
+     * empty.
+     *
+     * @return the value of the Cell.
+     */
     public int getValue() {
       return value;
     }
 
+    /**
+     * Indicates whether the Cell is empty or not.
+     *
+     * @return true if the Cell is empty, false otherwise
+     */
     public boolean isEmpty() {
       return value == 0;
     }
 
+    /**
+     * Allows to change the value of the Cell.
+     *
+     * @param value the new value of the Cell
+     */
     public void setValue(int value) {
       this.value = value;
     }
 
+    /**
+     * Returns a {@link Collection} of all other Cells in the same row than this Cell.
+     *
+     * @return a {@link Collection} of row neighbors
+     */
     public Collection<Cell> getRowNeighbors() {
       return rowNeighbors;
     }
 
+    /**
+     * Allows to set a {@link Collection} of Cells, which are interpreted to be in the same row.
+     *
+     * @param rowNeighbors a {@link Collection} of row neighbors
+     */
     public void setRowNeighbors(Collection<Cell> rowNeighbors) {
       this.rowNeighbors = rowNeighbors;
     }
 
+    /**
+     * Returns a {@link Collection} of all other Cells in the same column than this Cell.
+     *
+     * @return a {@link Collection} of column neighbors
+     */
     public Collection<Cell> getColumnNeighbors() {
       return columnNeighbors;
     }
 
+    /**
+     * Allows to set a {@link Collection} of Cells, which are interpreted to be in the same column.
+     *
+     * @param columnNeighbors a {@link Collection} of column neighbors
+     */
     public void setColumnNeighbors(Collection<Cell> columnNeighbors) {
       this.columnNeighbors = columnNeighbors;
     }
 
+    /**
+     * Returns a {@link Collection} of all other Cells in the same box than this Cell.
+     *
+     * @return a {@link Collection} of box neighbors
+     */
     public Collection<Cell> getBoxNeighbors() {
       return boxNeighbors;
     }
 
+    /**
+     * Allows to set a {@link Collection} of Cells, which are interpreted to be in the same box.
+     *
+     * @param boxNeighbors a {@link Collection} of box neighbors
+     */
     public void setBoxNeighbors(Collection<Cell> boxNeighbors) {
       this.boxNeighbors = boxNeighbors;
     }
 
+    /**
+     * Returns the next Cell consecutive to this Cell.
+     * <br><br>
+     * This function returns the Cell to the right of each Cell if the Cell is not the last Cell
+     * in a row. It returns the first Cell of the next row of each Cell if the Cell is the last
+     * Cell in a row. For the very last Cell in the very last row this function returns null.
+     * 
+     * @return the next Cell consecutive to this Cell or null if it is the last Cell.
+     */
     public Cell getNextCell() {
       return nextCell;
     }
 
+    /**
+     * Allows to set a Cell which is interpreted to be the next Cell consecutive to this Cell.
+     * 
+     * @param nextCell the next Cell consecutive to this Cell.
+     */
     public void setNextCell(Cell nextCell) {
       this.nextCell = nextCell;
     }
