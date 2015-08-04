@@ -7,6 +7,8 @@ import java.util.Random;
  * A Solver is capable of solving a given Sudoku {@link Grid}.
  */
 public class Solver {
+  private static final int EMPTY = 0;
+  
   private final int[] values;
 
   /**
@@ -39,7 +41,7 @@ public class Solver {
       if (grid.isValidValueForCell(cell.get(), value)) {
         cell.get().setValue(value);
         if (solve(grid, grid.getNextEmptyCellOf(cell.get()))) return true;
-        cell.get().setValue(0);
+        cell.get().setValue(EMPTY);
       }
     }
 
@@ -47,7 +49,7 @@ public class Solver {
   }
 
   private int[] generateRandomValues() {
-    int[] values = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int[] values = { EMPTY, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     Random random = new Random();
     for (int i = 0, j = random.nextInt(9), tmp = values[j]; i < values.length;
