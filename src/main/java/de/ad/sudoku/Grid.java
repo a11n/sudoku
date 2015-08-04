@@ -25,7 +25,7 @@ public class Grid {
    * @return a Grid instance corresponding to the provided two-dimensional int-array
    */
   public static Grid of(int[][] grid) {
-    //verifyGrid(grid);
+    verifyGrid(grid);
 
     Cell[][] cells = new Cell[9][9];
     List<List<Cell>> rows = new ArrayList<>();
@@ -93,6 +93,26 @@ public class Grid {
   public static Grid emptyGrid() {
     int[][] emptyGrid = new int[9][9];
     return Grid.of(emptyGrid);
+  }
+
+  private static void verifyGrid(int[][] grid) {
+    if(grid == null)
+      throw new IllegalArgumentException("grid must not be null");
+    
+    if(grid.length != 9)
+      throw new IllegalArgumentException("grid must have nine rows");
+
+    for (int[] row : grid) {
+      if (row.length != 9) {
+        throw new IllegalArgumentException("grid must have nine columns");
+      }
+
+      for (int value : row) {
+        if (value < 1 || value > 9) {
+          throw new IllegalArgumentException("grid must contain values from 1-9");
+        }
+      }
+    }
   }
 
   /**
