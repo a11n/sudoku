@@ -1,9 +1,7 @@
 package de.ad.sudoku;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * A Solver is capable of solving a given Sudoku {@link Grid}.
@@ -15,13 +13,12 @@ public class Solver {
    * Constructs a new Solver instance.
    */
   public Solver() {
-    List<Integer> randomValues = Arrays.asList(1,2,3,4,5,6,7,8,9);
-    Collections.shuffle(randomValues);
-    this.values = randomValues.stream().mapToInt(i->i).toArray();
+    this.values = generateRandomValues();
   }
 
   /**
    * Solves a given {@link Grid} using backtracking.
+   *
    * @param grid the {@link Grid} to solve
    * @throws IllegalStateException in case the provided {@link Grid} is invalid.
    */
@@ -47,5 +44,20 @@ public class Solver {
     }
 
     return false;
+  }
+
+  private int[] generateRandomValues() {
+    int[] values = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    Random random = new Random();
+    for (int i = 0, j = random.nextInt(9), tmp = values[j]; i < values.length;
+        i++, j = random.nextInt(9), tmp = values[j]) {
+      if(i == j) continue;
+      
+      values[j] = values[i];
+      values[i] = tmp;
+    }
+
+    return values;
   }
 }
