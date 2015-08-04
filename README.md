@@ -81,3 +81,38 @@ Grid grid = ...
 
 solver.solve(grid);
 ```
+
+####Backtracking
+
+#####Motivation
+The reason I created this library was that I wanted to understand how to solve a Sudoku puzzle programmatically.
+
+I was afraid that a sort of *"brute force"* technique will take too long. Thus, my first solution followed the concept of *"candidate search"*. This lead to many lines of code and only worked for simple - medium level Sudokus.
+At a certain point I needed to make assumptions anyway, so I started to use backtracking. Very quickly I've thrown away my solution and started to use backtracking completely, which simplified the algorithm's code a lot.
+
+#####Algorithm
+Backtracking is brute force. The algorithm takes the first valid value and goes on with this approach until the puzzle is solved or there is no more valid value left. If there is no more valid value left (but the puzzle is not solved yet) it tracks back to the last known valid value and tries another value.
+
+That way the algorithm will always find a valid solution unless the initially provided puzzle is invalid! It will even fill an empty puzzle (with no pre-filled cells at all) which makes it also ideal to be used to generate new puzzles.
+
+However, backtracking is a perfect example for recursion. Below is all the code it takes so solve any Sudoku puzzle.
+
+```java
+private final int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+private boolean solve(Grid grid, Optional<Grid.Cell> cell) {
+    if (!cell.isPresent()) {
+      return true;
+    }
+
+    for (int value : values) {
+      if (grid.isValidValueForCell(cell.get(), value)) {
+        cell.get().setValue(value);
+        if (solve(grid, grid.getNextEmptyCellOf(cell.get()))) return true;
+        cell.get().setValue(0);
+      }
+    }
+
+    return false;
+  }
+```
