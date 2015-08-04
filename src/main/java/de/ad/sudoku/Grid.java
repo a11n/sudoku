@@ -108,8 +108,8 @@ public class Grid {
       }
 
       for (int value : row) {
-        if (value < 1 || value > 9) {
-          throw new IllegalArgumentException("grid must contain values from 1-9");
+        if (value < 0 || value > 9) {
+          throw new IllegalArgumentException("grid must contain values from 0-9");
         }
       }
     }
