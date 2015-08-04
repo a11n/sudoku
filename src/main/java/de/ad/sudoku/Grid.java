@@ -33,9 +33,9 @@ public class Grid {
     List<List<Cell>> boxes = new ArrayList<>();
 
     for (int i = 0; i < 9; i++) {
-      rows.add(new ArrayList<>());
-      columns.add(new ArrayList<>());
-      boxes.add(new ArrayList<>());
+      rows.add(new ArrayList<Cell>());
+      columns.add(new ArrayList<Cell>());
+      boxes.add(new ArrayList<Cell>());
     }
 
     Cell lastCell = null;
@@ -143,15 +143,21 @@ public class Grid {
   }
 
   private Collection<Integer> getRowValuesOf(Cell cell) {
-    return cell.getRowNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
+    List<Integer> rowValues = new ArrayList<>();
+    for (Cell neighbor : cell.getRowNeighbors()) rowValues.add(neighbor.getValue());
+    return rowValues;
   }
 
   private Collection<Integer> getColumnValuesOf(Cell cell) {
-    return cell.getColumnNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
+    List<Integer> columnValues = new ArrayList<>();
+    for (Cell neighbor : cell.getColumnNeighbors()) columnValues.add(neighbor.getValue());
+    return columnValues;
   }
 
   private Collection<Integer> getBoxValuesOf(Cell cell) {
-    return cell.getBoxNeighbors().stream().map(Cell::getValue).collect(Collectors.toList());
+    List<Integer> boxValues = new ArrayList<>();
+    for (Cell neighbor : cell.getBoxNeighbors()) boxValues.add(neighbor.getValue());
+    return boxValues;
   }
 
   /**
@@ -298,12 +304,11 @@ public class Grid {
     }
 
     /**
-     * Returns the next Cell consecutive to this Cell.
-     * <br><br>
-     * This function returns the Cell to the right of each Cell if the Cell is not the last Cell
-     * in a row. It returns the first Cell of the next row of each Cell if the Cell is the last
-     * Cell in a row. For the very last Cell in the very last row this function returns null.
-     * 
+     * Returns the next Cell consecutive to this Cell. <br><br> This function returns the Cell to
+     * the right of each Cell if the Cell is not the last Cell in a row. It returns the first Cell
+     * of the next row of each Cell if the Cell is the last Cell in a row. For the very last Cell in
+     * the very last row this function returns null.
+     *
      * @return the next Cell consecutive to this Cell or null if it is the last Cell.
      */
     public Cell getNextCell() {
@@ -312,7 +317,7 @@ public class Grid {
 
     /**
      * Allows to set a Cell which is interpreted to be the next Cell consecutive to this Cell.
-     * 
+     *
      * @param nextCell the next Cell consecutive to this Cell.
      */
     public void setNextCell(Cell nextCell) {
