@@ -1,14 +1,14 @@
-#Sudoku
+# Sudoku
 
 A Sudoku library for Java and Android.
 
 It features a `Generator` to generate random Sudoku `Grid`s of various complexity as well as a `Solver` to solve any provided `Grid` using backtracking.
 
-##What is Sudoku?
+## What is Sudoku?
 >Sudoku is a logic-based, combinatorial number-placement puzzle. The objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 sub-grids that compose the grid (also called "boxes") contains all of the digits from 1 to 9.
 *(Source [Wikipedia](https://en.wikipedia.org/wiki/Sudoku))*
 
-###Example
+### Example
 ```
 ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗
 ║   │   │   ║ 6 │   │ 2 ║   │   │   ║
@@ -31,7 +31,7 @@ It features a `Generator` to generate random Sudoku `Grid`s of various complexit
 ╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝
 ```
 
-##API
+## API
 This library basically features three classes
 * `Generator`: Generates random Sudoku `Grid`s of various complexity.
 * `Grid`: Represents a Sudoku `Grid` and features a variety of convenient methods.
@@ -39,7 +39,7 @@ This library basically features three classes
 
 For detailed information check the [javadoc](http://a11n.github.io/sudoku/).
 
-###How to use `Generator`?
+### How to use `Generator`?
 In order to generate a new, random Sudoku `Grid` the `Generator` class features a straightforward `generate()` method.
 This method takes the `numberOfEmptyCells` as parameter. This parameter controls the complexity of the resulting `Grid` for human players.
 The complexity increases with a higher amount of empty cells. The example `Grid` shown above contains 42 empty cells.
@@ -49,7 +49,7 @@ Generator generator = new Generator();
 Grid grid = generator.generate(42);
 ```
 
-###How to use `Grid`?
+### How to use `Grid`?
 In order to display the `Grid` in your application you have to iterate over the `Grid` utilizing its `getSize()` and `getCell()` functions.
 For console-based application you may also use its convenient `toString()` method which produces a textual representation as shown in the example grid above.
 ```java
@@ -73,7 +73,7 @@ int[][] rawGrid = new int[][]{
 Grid grid = Grid.of(rawGrid);
 ```
 
-###How to use `Solver`?
+### How to use `Solver`?
 The solver solves any valid Grid using backtracking.
 ```java
 Solver solver = new Solver();
@@ -82,7 +82,7 @@ Grid grid = ...
 solver.solve(grid);
 ```
 
-####Backtracking
+#### Backtracking
 
 #####Motivation
 The reason I created this library was that I wanted to understand how to solve a Sudoku puzzle programmatically.
@@ -90,7 +90,7 @@ The reason I created this library was that I wanted to understand how to solve a
 I was afraid that a sort of *"brute force"* technique will take too long. Thus, my first solution followed the concept of *"candidate search"*. This lead to many lines of code and only worked for simple - medium level Sudokus.
 At a certain point I needed to make assumptions anyway, so I started to use backtracking. Very quickly I've thrown away my solution and started to use backtracking completely, which simplified the algorithm's code a lot.
 
-#####Algorithm
+##### Algorithm
 Backtracking is brute force. The algorithm takes the first valid value and goes on with this approach until the puzzle is solved or there is no more valid value left. If there is no more valid value left (but the puzzle is not solved yet) it tracks back to the last known valid value and tries another value.
 
 That way the algorithm will always find a valid solution unless the initially provided puzzle is invalid! It will even fill an empty puzzle (with no pre-filled cells at all) which makes it also ideal to be used to generate new puzzles.
